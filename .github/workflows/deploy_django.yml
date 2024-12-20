@@ -42,5 +42,5 @@ jobs:
       # Run deployment script on the server
       - name: Run deploy script on local server
         run: |
-          ssh -to StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} \
+          ssh -tt -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} \
             'sudo bash /home/user/dockers/deploy_django.sh'

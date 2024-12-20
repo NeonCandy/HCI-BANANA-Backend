@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.10
 
 # Use root user explicitly (default in most images)
 USER root
@@ -40,13 +40,13 @@ COPY . .
 RUN chmod +x /usr/local/bin/python
 
 # Ensure that the app directory and its contents are readable and executable
-RUN chmod -R 755 /app
+RUN chmod -R 777 /app
 
 # Run Django migrations
-# RUN python manage.py migrate
+RUN python manage.py migrate
 
 # Expose the port Django runs on
 EXPOSE 8000
 
 # Start Django server
-# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
