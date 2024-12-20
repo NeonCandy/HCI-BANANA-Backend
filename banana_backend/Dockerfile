@@ -43,7 +43,7 @@ RUN chmod +x /usr/local/bin/python
 RUN chmod -R 755 /app
 
 # Run Django migrations
-RUN python manage.py migrate
+# RUN python manage.py migrate
 
 # Expose the port Django runs on
 EXPOSE 8000
