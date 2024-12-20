@@ -1,7 +1,7 @@
-FROM python:3.10
+FROM python:3.10-slim
 
 # Use root user explicitly (default in most images)
-USER root
+# USER root
 
 # Set environment variables for database configuration
 ARG DB_NAME
@@ -37,10 +37,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Ensure the Python executable has the correct permissions
-RUN chmod +x /usr/local/bin/python
+#RUN chmod +x /usr/local/bin/python
 
 # Ensure that the app directory and its contents are readable and executable
-RUN chmod -R 777 /app
+#RUN chmod -R 755 /app
 
 # Run Django migrations
 RUN python manage.py migrate
