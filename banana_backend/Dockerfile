@@ -1,5 +1,8 @@
 FROM python:3.10-slim
 
+# Use root user explicitly (default in most images)
+USER root
+
 # Set environment variables for database configuration
 ARG DB_NAME
 ARG DB_USER
