@@ -30,7 +30,7 @@ jobs:
           --build-arg DB_PASS=${{ secrets.DB_PASS }} \
           --build-arg DB_HOST=${{ secrets.DB_HOST }} \
           --build-arg DB_PORT=${{ secrets.DB_PORT }} \
-          -t jansuklje/banana-frontend:latest -f ./banana_backend/Dockerfile ./banana_backend
+          -t jansuklje/banana-backend:latest -f ./banana_backend/Dockerfile ./banana_backend
           docker push jansuklje/banana-backend:latest
 
       # Set up SSH key for deployment
