@@ -10,39 +10,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Log in to Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Build and push Docker image
       - name: Build and push Docker image
         run: |
-          # Build the Docker image without passing sensitive build args
           docker build -t jansuklje/banana-backend:latest -f ./banana_backend/Dockerfile ./banana_backend
-      
-          # Push the Docker image to Docker Hub
           docker push jansuklje/banana-backend:latest
 
-      # Set up SSH key for deployment
       - name: Set up SSH key
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # Navigate to docker dir
-      - name: Navigate to dockers dir
-        run: |
-          ssh -tt -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} \
-            'cd /home/user/dockers'
-
-      # Run deployment script on the server
       - name: Run deploy script on local server
         run: |
           ssh -tt -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} \
