@@ -29,15 +29,6 @@ jobs:
       
           # Push the Docker image to Docker Hub
           docker push jansuklje/banana-backend:latest
-      
-          # Run the container with the environment variables passed at runtime (using secrets)
-          docker run -d \
-            -e DB_NAME=${{ secrets.DB_NAME }} \
-            -e DB_USER=${{ secrets.DB_USER }} \
-            -e DB_PASS=${{ secrets.DB_PASS }} \
-            -e DB_HOST=${{ secrets.DB_HOST }} \
-            -e DB_PORT=${{ secrets.DB_PORT }} \
-            jansuklje/banana-backend:latest
 
       # Set up SSH key for deployment
       - name: Set up SSH key
