@@ -24,14 +24,20 @@ jobs:
       # Build and push Docker image
       - name: Build and push Docker image
         run: |
-          docker build \
-          --build-arg DB_NAME=${{ secrets.DB_NAME }} \
-          --build-arg DB_USER=${{ secrets.DB_USER }} \
-          --build-arg DB_PASS=${{ secrets.DB_PASS }} \
-          --build-arg DB_HOST=${{ secrets.DB_HOST }} \
-          --build-arg DB_PORT=${{ secrets.DB_PORT }} \
-          -t jansuklje/banana-backend:latest -f ./banana_backend/Dockerfile ./banana_backend
+          # Build the Docker image without passing sensitive build args
+          docker build -t jansuklje/banana-backend:latest -f ./banana_backend/Dockerfile ./banana_backend
+      
+          # Push the Docker image to Docker Hub
           docker push jansuklje/banana-backend:latest
+      
+          # Run the container with the environment variables passed at runtime (using secrets)
+          docker run -d \
+            -e DB_NAME=${{ secrets.DB_NAME }} \
+            -e DB_USER=${{ secrets.DB_USER }} \
+            -e DB_PASS=${{ secrets.DB_PASS }} \
+            -e DB_HOST=${{ secrets.DB_HOST }} \
+            -e DB_PORT=${{ secrets.DB_PORT }} \
+            jansuklje/banana-backend:latest
 
       # Set up SSH key for deployment
       - name: Set up SSH key
