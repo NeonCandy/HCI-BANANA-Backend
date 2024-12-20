@@ -33,6 +33,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project files
 COPY . .
 
+# Ensure the Python executable has the correct permissions
+RUN chmod +x /usr/local/bin/python
+
+# Ensure that the app directory and its contents are readable and executable
+RUN chmod -R 755 /app
+
 # Run Django migrations
 RUN python manage.py migrate
 
